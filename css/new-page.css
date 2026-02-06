@@ -1,0 +1,1263 @@
+/* Background with fade in */
+.background-fade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/backgroundv02-aero.jpg');
+    background-size: cover;
+    background-position: center;
+    background-color: #111;
+    opacity: 0;
+    animation: fadeInBackground 1s ease forwards;
+    z-index: -1;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background-color: #000;
+}
+
+@keyframes fadeInBackground {
+    from {
+        opacity: 0;
+        background-color: #000;
+    }
+    to {
+        opacity: 1;
+        background-color: #111;
+    }
+}
+
+/* Main Container */
+.sidebar {
+    position: fixed;
+    left: 10px;
+    top: 10px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .icon {
+    margin-bottom: 20px;
+}
+
+.sidebar .icon:last-child {
+    margin-bottom: 0;
+}
+
+/* Icons */
+.icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+}
+
+.icon img {
+    width: 75px;
+    height: 75px;
+    margin-bottom: 5px;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
+    transition: all 0.3s ease;
+}
+
+.icon:hover img {
+    filter: brightness(1.1);
+}
+
+.icon span {
+    background-color: black;
+    color: white;
+    padding: 5px;
+    width: 75px;
+    text-align: center;
+    transition: background 0.3s ease-in;
+    font-size: 14px;
+}
+
+.icon span:hover {
+    background: linear-gradient(
+        90deg,
+        red,
+        orange,
+        yellow,
+        green,
+        blue,
+        indigo,
+        violet,
+        red 
+    );
+    background-size: 700% 100%;
+    animation: rainbowBackground 3s steps(10, end) infinite;
+    cursor: pointer;
+}
+
+@keyframes rainbowBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Windows */
+.window {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    cursor: default;
+}
+
+.window.active {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+@keyframes oldSchoolOpen {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes oldSchoolClose {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.window-opening {
+    animation: oldSchoolOpen 0.3s ease;
+}
+
+.window-closing {
+    animation: oldSchoolClose 0.3s ease;
+}
+
+.window-header {
+    background-color: #e2e2e2;
+    color: #333;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    user-select: none;
+}
+
+.window-buttons {
+    display: flex;
+    gap: 4px;
+}
+
+.window-header button {
+    background: #e2e2e2;
+    border: 1px solid #ccc;
+    color: #333;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.window-header button:first-child {
+    /* Minimize button */
+    margin-right: 4px;
+}
+
+.window-header button:first-child:hover {
+    background-color: #ffff00;
+    color: black;
+    border-color: #cccc00;
+}
+
+.window-header button:last-child:hover {
+    background-color: #ff0000;
+    color: white;
+    border-color: #cc0000;
+}
+
+.window-content {
+    padding: 15px;
+    background-color: #fff;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-content: flex-start;
+}
+
+.window-content::-webkit-scrollbar {
+    width: 16px;
+}
+
+.window-content::-webkit-scrollbar-track {
+    background: #c0c0c0;
+    border: 1px solid #808080;
+}
+
+.window-content::-webkit-scrollbar-thumb {
+    background: #808080;
+    border: 1px solid #404040;
+}
+
+.window-content::-webkit-scrollbar-button {
+    background: #c0c0c0;
+    border: 1px solid #808080;
+    height: 16px;
+}
+
+.window-content::-webkit-scrollbar-button:vertical:decrement {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><polygon points="4,12 12,12 8,8" fill="%23404040"/></svg>');
+}
+
+.window-content::-webkit-scrollbar-button:vertical:increment {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><polygon points="4,4 12,4 8,8" fill="%23404040"/></svg>');
+}
+
+/* Update icon layout in windows */
+.window .icon {
+    flex: 0 0 auto;
+    margin: 5px;
+    width: 80px;
+}
+
+.window .icon img {
+    width: 75px;
+    height: 75px;
+    margin-bottom: 4px;
+}
+
+.window .icon span {
+    font-size: 14px;
+    width: 75px;
+    background-color: black;
+    color: white;
+    padding: 5px;
+}
+
+.window .icon span:hover {
+    background: linear-gradient(
+        90deg,
+        red,
+        orange,
+        yellow,
+        green,
+        blue,
+        indigo,
+        violet,
+        red 
+    );
+    background-size: 700% 100%;
+    animation: rainbowBackground 3s steps(10, end) infinite;
+}
+
+/* Taskbar */
+.taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #0078d7;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    z-index: 99;
+    border-top: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.start-button {
+    background-color: #005a9e;
+    color: white;
+    font-weight: bold;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    margin-right: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.dock {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    gap: 2px;
+}
+
+.dock-item {
+    height: 50px;
+    padding: 0 20px;
+    background-color: #005a9e;
+    border: 1px solid #004080;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.dock-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.dock-label {
+    white-space: nowrap;
+}
+
+.dock-item:hover {
+    background-color: #004080;
+}
+
+.clock {
+    margin-left: auto;
+    color: white;
+    font-family: monospace;
+    margin-right: 20px;
+    text-align: right;
+    background-color: #005a9e;
+    padding: 15px;
+}
+
+/* Start Menu */
+.start-menu {
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    width: 200px;
+    background-color: #0078d7;
+    border: 1px solid #005a9e;
+    display: none;
+    z-index: 1500;
+}
+
+.start-menu-item {
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+    border-top: 0.5px solid rgba(255, 255, 255, 0.8);
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.8);
+    background-color: #0078d7;
+}
+
+.start-menu-item:first-child {
+    border-top: none;
+}
+
+.start-menu-item:last-child {
+    border-bottom: none;
+}
+
+.start-menu-item:hover {
+    background-color: #005a9e;
+}
+
+/* Error Window */
+.error-window {
+    width: 450px;
+    min-width: auto;
+    min-height: auto;
+    height: 300px;
+    background-color: #ffdddd;
+    border: 2px solid #ff0000;
+}
+
+.error-window .window-content {
+    background-color: #ffdddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.error-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 20px;
+}
+
+.error-button {
+    background-color: #0078d7;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#error-message {
+    font-size: 18px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.error-window.window-opening {
+    animation: oldSchoolOpen 0.25s steps(3);
+}
+
+.error-window.window-closing {
+    animation: oldSchoolClose 0.25s steps(3);
+}
+
+/* Trashcan Container */
+.trashcan-container {
+    position: fixed;
+    right: 10px;
+    bottom: 60px;
+    z-index: 100;
+}
+
+/* About Me window specific styles */
+#over-mij-window {
+    width: 1000px;
+    height: 700px;
+}
+
+#over-mij-window .window-content {
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    height: calc(100% - 40px);
+}
+
+#over-mij-window .window-content img {
+    width: 1000px;
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Image viewer window styles */
+#image-viewer-window {
+    width: 1000px;
+    height: 700px;
+}
+
+#image-viewer-window .window-content {
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    height: calc(100% - 40px);
+}
+
+#image-viewer-window .window-content img {
+    width: 1000px;
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Instructions window */
+#instructions-window {
+    width: 300px;
+    min-height: 280px;
+}
+
+#instructions-window .window-content {
+    padding: 15px;
+    height: calc(100% - 40px);
+    position: relative;
+}
+
+#instructions-window .window-content ul {
+    margin-bottom: 60px;
+}
+
+#instructions-window .window-content > div:last-child {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    text-align: left;
+}
+
+#instructions-window .window-content img {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 10px;
+}
+
+#instructions-window .window-content p {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+#instructions-window .window-content button {
+    margin-top: 10px;
+    padding: 5px 15px;
+    background-color: #c0c0c0;
+    border: 2px solid #808080;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#instructions-window .window-content button:hover {
+    background-color: #d0d0d0;
+}
+
+#instructions-window .window-content button:active {
+    background-color: #b0b0b0;
+    border-color: #404040;
+}
+
+/* Add min-width to specific windows that need it */
+#portfolio-window,
+#contact-window,
+#software-window,
+/* #mcuden-window, */
+#vhs-window,
+#studiochief-window,
+/* #depul-window, */
+#diverse-window,
+#image-viewer-window,
+#trashcan-window {
+    min-width: 600px;
+}
+
+/* CRT Effect */
+.crt-overlay {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 20000;
+    pointer-events: none;
+}
+
+.crt-overlay::after {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 80px rgba(0,0,0,0.2) inset;
+    pointer-events: none;
+    z-index: 2002;
+}
+
+/* Vignette effect */
+body::before {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 200px rgba(56, 56, 56, 0.2) inset;
+    pointer-events: none;
+    z-index: 20000;
+}
+
+/* Staggered loading animations */
+@keyframes fadeInElement {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-element {
+    opacity: 0;
+}
+
+.fade-in-element.show {
+    animation: fadeInElement 0.3s steps(5) forwards;
+}
+
+/* Apply initial opacity to elements we want to animate */
+.sidebar .icon,
+.trashcan-container,
+.taskbar,
+.start-button,
+.clock {
+    opacity: 0;
+}
+
+/* Mobile warning styles */
+@media (max-width: 767px) {
+    body.mobile-warning-active > *:not(#mobile-warning-window):not(.background-fade):not(.crt-overlay) {
+        display: none !important;
+    }
+    
+    #mobile-warning-window {
+        display: block !important;
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 1999 !important;
+        width: 90% !important;
+        max-width: 400px !important;
+        min-height: auto !important;
+        height: auto !important;
+    }
+
+    #mobile-warning-window .window-header {
+        justify-content: space-between !important;
+        padding: 12px !important;
+    }
+
+    #mobile-warning-window .window-header span {
+        font-size: 18px !important;
+        font-weight: bold !important;
+    }
+
+    #mobile-warning-window .window-header button {
+        background: #e2e2e2 !important;
+        border: 1px solid #ccc !important;
+        color: #333 !important;
+        cursor: pointer !important;
+        width: 24px !important;
+        height: 24px !important;
+        font-weight: bold !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: background-color 0.2s !important;
+    }
+
+    #mobile-warning-window .window-header button:hover {
+        background-color: #ff0000 !important;
+        color: white !important;
+        border-color: #cc0000 !important;
+    }
+
+    #mobile-warning-window .window-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        padding: 20px !important;
+    }
+
+    #mobile-warning-window .window-content img {
+        width: 96px !important;
+        height: 96px !important;
+        margin: 0 auto 20px !important;
+    }
+
+    #mobile-warning-window .window-content p {
+        text-align: center !important;
+        margin: 0 !important;
+        font-size: 18px !important;
+        line-height: 1.5 !important;
+    }
+
+    #mobile-warning-window .window-content button {
+        margin-top: 20px !important;
+        padding: 10px 20px !important;
+        background: #0078d7 !important;
+        color: white !important;
+        border: none !important;
+        cursor: pointer !important;
+        font-size: 16px !important;
+        border-radius: 4px !important;
+    }
+
+    #mobile-warning-window .window-content button:hover {
+        background: #005a9e !important;
+    }
+
+    /* Portfolio Window Mobile Styles */
+    #portfolio-window {
+        width: 90vw !important;
+        height: 60vh !important;
+        min-width: auto !important;
+        max-width: none !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+    }
+
+    #portfolio-window .window-content {
+        padding: 10px !important;
+        height: calc(100% - 40px) !important;
+        overflow-y: auto !important;
+    }
+
+    #portfolio-window .icon {
+        width: 80px !important;
+        margin: 5px !important;
+    }
+
+    #portfolio-window .icon img {
+        width: 70px !important;
+        height: 70px !important;
+    }
+
+    #portfolio-window .icon span {
+        width: 80px !important;
+        font-size: 15px !important;
+        padding: 6px !important;
+    }
+
+    /* Trashcan Window Mobile Styles */
+    #trashcan-window {
+        width: 90vw !important;
+        height: 45vh !important;
+        min-width: auto !important;
+        max-width: none !important;
+    }
+
+    #trashcan-window .window-content {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)) !important;
+        gap: 10px !important;
+        padding: 15px !important;
+        height: calc(100% - 40px) !important;
+        overflow-y: auto !important;
+    }
+
+    /* Contact Window Mobile Styles */
+    #contact-window {
+        width: 90vw !important;
+        height: auto !important;
+        min-width: auto !important;
+        max-width: none !important;
+    }
+
+    #contact-window .window-content {
+        padding: 10px !important;
+        height: auto !important;
+    }
+
+    #contact-window .window-content img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* About Me Window Mobile Styles */
+    #over-mij-window {
+        width: 90vw !important;
+        height: 69vh !important;
+        min-width: auto !important;
+        max-width: none !important;
+        max-height: 69vh !important;
+    }
+
+    #over-mij-window .window-content {
+        padding: 10px !important;
+        height: calc(100% - 40px) !important;
+        overflow-y: auto !important;
+    }
+
+    #over-mij-window .window-content img {
+        width: 100% !important;
+        height: auto !important;
+        max-width: none !important;
+    }
+
+    /* Software Window Mobile Styles */
+    #software-window {
+        width: 90vw !important;
+        height: 60vh !important;
+        min-width: auto !important;
+        max-width: none !important;
+    }
+
+    #software-window .window-content {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)) !important;
+        gap: 10px !important;
+        padding: 15px !important;
+        height: calc(100% - 40px) !important;
+        overflow-y: auto !important;
+    }
+
+    /* General Mobile Window Styles */
+    .window {
+        width: 90vw !important;
+        max-width: none !important;
+        min-height: auto !important;
+        height: auto !important;
+    }
+    
+    .window-content {
+        max-height: 60vh !important;
+        overflow-y: auto !important;
+    }
+    
+    .icon {
+        width: 80px !important;
+    }
+    
+    .icon img {
+        width: 70px !important;
+        height: 70px !important;
+    }
+    
+    .icon span {
+        font-size: 15px !important;
+        width: 80px !important;
+        padding: 6px !important;
+    }
+    
+    .taskbar {
+        height: 48px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .start-button {
+        font-size: 16px !important;
+        padding: 0 15px !important;
+    }
+    
+    .clock {
+        font-size: 16px !important;
+        padding: 12px 15px !important;
+        margin-right: 15px !important;
+    }
+
+    /* VHS Window Mobile Styles */
+    #vhs-window {
+        width: 90vw !important;
+        height: 45vh !important;
+        min-width: auto !important;
+        max-width: none !important;
+    }
+
+    #vhs-window .window-content {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)) !important;
+        gap: 10px !important;
+        padding: 15px !important;
+        height: calc(100% - 40px) !important;
+        overflow-y: auto !important;
+    }
+
+    /* Studio Chief Window Mobile Styles */
+    #studiochief-window {
+        width: 90vw !important;
+        height: 45vh !important;
+        min-width: auto !important;
+        max-width: none !important;
+    }
+
+    #studiochief-window .window-content {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)) !important;
+        gap: 10px !important;
+        padding: 15px !important;
+        height: calc(100% - 40px) !important;
+        overflow-y: auto !important;
+    }
+
+    /* Diverse Window Mobile Styles */
+    #diverse-window {
+        width: 90vw !important;
+        height: 45vh !important;
+        min-width: auto !important;
+        max-width: none !important;
+    }
+
+    #diverse-window .window-content {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)) !important;
+        gap: 10px !important;
+        padding: 15px !important;
+        height: calc(100% - 40px) !important;
+        overflow-y: auto !important;
+    }
+
+    /* Image Viewer Window Mobile Styles */
+    #image-viewer-window {
+        width: 90vw !important;
+        height: auto !important;
+        min-width: auto !important;
+        max-width: none !important;
+        max-height: 60vh !important;
+        margin-top: -100px !important;
+    }
+
+    #image-viewer-window .window-content {
+        padding: 10px !important;
+        height: auto !important;
+        min-height: auto !important;
+        overflow-y: auto !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+    }
+
+    #image-viewer-window .window-content img {
+        width: 100% !important;
+        height: auto !important;
+        max-width: none !important;
+        display: block !important;
+        margin: 0 !important;
+    }
+
+    .start-menu {
+        bottom: 48px !important;
+        width: 100% !important;
+        left: 0 !important;
+        border: none !important;
+        z-index: 1500 !important;
+    }
+    
+    .start-menu-item {
+        padding: 12px 15px !important;
+        font-size: 16px !important;
+        width: 100% !important;
+        border-top: 0.5px solid rgba(255, 255, 255, 0.8) !important;
+        border-bottom: 0.5px solid rgba(255, 255, 255, 0.8) !important;
+        box-sizing: border-box !important;
+        background-color: #0078d7 !important;
+    }
+
+    .start-menu-item:first-child {
+        border-top: none !important;
+    }
+
+    .start-menu-item:last-child {
+        border-bottom: none !important;
+    }
+
+    .start-menu-item:hover {
+        background-color: #005a9e !important;
+    }
+
+    /* Text Editor Windows Mobile Styles */
+    /* #mcuden-text-window, */
+    #vhs-text-window,
+    /* #depul-text-window, */
+    #diverse-text-window {
+        width: 85vw !important;
+        min-width: 85vw !important;
+        max-width: 85vw !important;
+        height: 200px !important;
+        min-height: 200px !important;
+        max-height: 200px !important;
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.45) !important;
+    }
+
+    /* #mcuden-text-window .window-content,
+    #depul-text-window .window-content, */
+    #vhs-text-window .window-content,
+    #diverse-text-window .window-content {
+        width: 100% !important;
+        height: calc(100% - 40px) !important;
+        padding: 12px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Standardize all text to 15px */
+    .icon span,
+    .start-button,
+    .clock,
+    .start-menu-item,
+    .window-header span,
+    /* #mcuden-text-window .window-content p,
+    #depul-text-window .window-content p, */
+    #vhs-text-window .window-content p,
+    #diverse-text-window .window-content p,
+    #portfolio-window .icon span {
+        font-size: 15px !important;
+    }
+
+    /* Start Menu and Taskbar Text */
+    .start-button {
+        font-size: 16px !important;
+        padding: 0 15px !important;
+    }
+    
+    .clock {
+        font-size: 16px !important;
+        padding: 12px 15px !important;
+        margin-right: 15px !important;
+    }
+    
+    .start-menu-item {
+        padding: 12px 15px !important;
+        font-size: 16px !important;
+        width: 100% !important;
+        border-top: 0.5px solid rgba(255, 255, 255, 0.8) !important;
+        border-bottom: 0.5px solid rgba(255, 255, 255, 0.8) !important;
+        box-sizing: border-box !important;
+        background-color: #0078d7 !important;
+    }
+
+    /* Window Headers */
+    .window-header span {
+        font-size: 15px !important;
+    }
+
+    /* Text Editor Content */
+    /* #mcuden-text-window .window-content p,
+    #depul-text-window .window-content p, */
+    #vhs-text-window .window-content p,
+    #diverse-text-window .window-content p {
+        font-size: 15px !important;
+    }
+
+    /* Portfolio Window Icons */
+    #portfolio-window .icon span {
+        font-size: 15px !important;
+    }
+}
+
+/* Text Editor Windows */
+/* #mcuden-text-window, */
+#vhs-text-window,
+/* #depul-text-window, */
+#diverse-text-window {
+    height: 200px !important;
+    min-height: 200px !important;
+    max-height: 200px !important;
+    width: 400px !important;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.45) !important;
+    border: none !important;
+}
+
+/* #mcuden-text-window .window-content,
+#depul-text-window .window-content, */
+#vhs-text-window .window-content,
+#diverse-text-window .window-content {
+    height: calc(100% - 72px) !important;
+    overflow: hidden !important;
+    border: none !important;
+    border-top: none !important;
+    padding: 15px !important;
+    display: block !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    flex-wrap: nowrap !important;
+    gap: 0 !important;
+}
+
+/* #mcuden-text-window .window-content p,
+#depul-text-window .window-content p, */
+#vhs-text-window .window-content p,
+#diverse-text-window .window-content p {
+    margin: 0 !important;
+    font-family: monospace !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    white-space: pre-wrap !important;
+}
+
+/* Fade to black animation */
+.fade-to-black {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    animation: fadeIn 2s steps(8) forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Mobile View Handling */
+body.mobile-view > *:not(.background-fade):not(.crt-overlay):not(#mobile-warning-window) {
+    display: none !important;
+}
+
+body.mobile-view #mobile-warning-window {
+    display: block !important;
+    z-index: 9999;
+}
+
+/* Contact Window Image Handling */
+#contact-window .window-content img.contact-image-desktop {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+#contact-window .window-content img.contact-image-mobile {
+    display: none;
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 767px) {
+    #contact-window .window-content img.contact-image-desktop {
+        display: none !important;
+    }
+
+    #contact-window .window-content img.contact-image-mobile {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+}
+
+/* About Me Window Image Handling */
+#over-mij-window .window-content img.about-me-image-desktop {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: none;
+}
+
+#over-mij-window .window-content img.about-me-image-mobile {
+    display: none;
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 767px) {
+    #over-mij-window .window-content img.about-me-image-desktop {
+        display: none !important;
+    }
+
+    #over-mij-window .window-content img.about-me-image-mobile {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+}
+
+/* Settings Window */
+#settings-window {
+    width: 350px !important;
+    min-width: 350px !important;
+}
+
+/* Settings Window Styles */
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+    padding: 10px 15px;
+    gap: 40px;
+}
+
+.setting-item span {
+    font-size: 15px;
+    color: #333;
+}
+
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #0078d7;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Glow Effect */
+@keyframes glow {
+    0% {
+        filter: drop-shadow(0 0 8px rgba(255, 220, 220, 0.9))
+               drop-shadow(0 0 12px rgba(255, 150, 150, 0.8))
+               drop-shadow(0 0 15px rgba(255, 100, 100, 0.7));
+    }
+    50% {
+        filter: drop-shadow(0 0 15px rgba(255, 200, 200, 1))
+               drop-shadow(0 0 25px rgba(255, 100, 100, 0.9))
+               drop-shadow(0 0 35px rgba(255, 50, 50, 0.8))
+               drop-shadow(0 0 45px rgba(255, 0, 0, 0.6));
+    }
+    100% {
+        filter: drop-shadow(0 0 8px rgba(255, 220, 220, 0.9))
+               drop-shadow(0 0 12px rgba(255, 150, 150, 0.8))
+               drop-shadow(0 0 15px rgba(255, 100, 100, 0.7));
+    }
+}
+
+.icon.glow img {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Rest of your existing styles... */
