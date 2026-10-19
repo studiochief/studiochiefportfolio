@@ -1,6 +1,7 @@
 // Icon mapping for dock items
 const windowIconMap = {
     'portfolio': 'img/Bestand.png',
+    'photobook': 'img/divers-image.png',
     'contact': 'img/Contact-icon.png',
     'over-mij': 'img/Computer.png',
     'software': 'img/application_folder.png',
@@ -117,6 +118,8 @@ function stopPortfolioGlow() {
 // Window management
 let openWindows = [];
 let minimizedWindows = [];
+let currentPhotobookGallery = null;
+let currentPhotobookImageIndex = 0;
 
 function setLoadingState(duration = 500) {
     document.body.classList.add('loading-state');
@@ -140,6 +143,10 @@ function openWindow(windowId) {
     if (!window) {
         console.error(`Window with ID ${windowId}-window not found`);
         return;
+    }
+
+    if (windowId === 'photobook') {
+        renderPhotobookGallerySelector();
     }
 
     // Stop the portfolio glow effect when any window is opened
@@ -192,6 +199,140 @@ function openWindow(windowId) {
     // Update z-index to bring window to front
     updateWindowZIndex();
     console.log(`Window ${windowId} opened successfully`);
+}
+
+function openPhotobook() {
+    openWindow('photobook');
+}
+
+function renderPhotobookGallerySelector() {
+    const selector = document.getElementById('photobook-gallery-selector');
+    if (!selector) {
+        console.error('Photobook gallery selector was not found');
+        return;
+    }
+
+    selector.replaceChildren();
+
+    const galleries = window.photobookGalleries;
+    if (!Array.isArray(galleries) || galleries.length === 0) {
+        selector.textContent = 'No photo galleries are available.';
+        return;
+    }
+
+    galleries.forEach((gallery) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'photobook-gallery-card';
+        card.addEventListener('click', () => openPhotobookGallery(gallery.id));
+
+        const cover = document.createElement('img');
+        cover.src = gallery.images[0].src;
+        cover.alt = '';
+
+        const title = document.createElement('span');
+        title.className = 'photobook-gallery-card-title';
+        title.textContent = gallery.title;
+
+        const count = document.createElement('span');
+        count.className = 'photobook-gallery-card-count';
+        count.textContent = `${gallery.images.length} photos`;
+
+        card.append(cover, title, count);
+        selector.appendChild(card);
+    });
+
+    const gallerySelector = document.getElementById('photobook-gallery-selector');
+    const galleryView = document.getElementById('photobook-gallery-view');
+    gallerySelector.hidden = false;
+    galleryView.hidden = true;
+    galleryView.setAttribute('aria-hidden', 'true');
+}
+
+function openPhotobookGallery(galleryId) {
+    const gallery = window.photobookGalleries.find((item) => item.id === galleryId);
+    if (!gallery || gallery.images.length === 0) {
+        console.error(`Photobook gallery "${galleryId}" was not found or is empty`);
+        return;
+    }
+
+    currentPhotobookGallery = gallery;
+    currentPhotobookImageIndex = 0;
+
+    const selector = document.getElementById('photobook-gallery-selector');
+    const galleryView = document.getElementById('photobook-gallery-view');
+    document.getElementById('photobook-gallery-title').textContent = gallery.title;
+    selector.hidden = true;
+    galleryView.hidden = false;
+    galleryView.setAttribute('aria-hidden', 'false');
+
+    renderPhotobookImage();
+}
+
+function renderPhotobookImage() {
+    if (!currentPhotobookGallery) {
+        return;
+    }
+
+    const image = currentPhotobookGallery.images[currentPhotobookImageIndex];
+    const mainImage = document.getElementById('photobook-main-image');
+    mainImage.src = image.src;
+    mainImage.alt = image.alt || `${currentPhotobookGallery.title}, photo ${currentPhotobookImageIndex + 1}`;
+    document.getElementById('photobook-image-count').textContent =
+        `${currentPhotobookImageIndex + 1} / ${currentPhotobookGallery.images.length}`;
+
+    const thumbnailStrip = document.getElementById('photobook-thumb-strip');
+    thumbnailStrip.replaceChildren();
+    currentPhotobookGallery.images.forEach((galleryImage, index) => {
+        const thumbnail = document.createElement('button');
+        thumbnail.type = 'button';
+        thumbnail.className = 'photobook-thumbnail';
+        thumbnail.classList.toggle('selected', index === currentPhotobookImageIndex);
+        thumbnail.setAttribute('aria-label', `Show photo ${index + 1}`);
+        thumbnail.setAttribute('aria-pressed', String(index === currentPhotobookImageIndex));
+        thumbnail.addEventListener('click', () => {
+            currentPhotobookImageIndex = index;
+            renderPhotobookImage();
+        });
+
+        const thumbnailImage = document.createElement('img');
+        thumbnailImage.src = galleryImage.src;
+        thumbnailImage.alt = '';
+        thumbnailImage.loading = 'lazy';
+        thumbnail.appendChild(thumbnailImage);
+        thumbnailStrip.appendChild(thumbnail);
+    });
+}
+
+function changePhotobookImage(offset) {
+    if (!currentPhotobookGallery) {
+        return;
+    }
+
+    const imageCount = currentPhotobookGallery.images.length;
+    currentPhotobookImageIndex = (currentPhotobookImageIndex + offset + imageCount) % imageCount;
+    renderPhotobookImage();
+}
+
+function showPhotobookGallerySelector() {
+    currentPhotobookGallery = null;
+    renderPhotobookGallerySelector();
+}
+
+async function togglePhotobookFullscreen() {
+    const photobookWindow = document.getElementById('photobook-window');
+
+    try {
+        if (document.fullscreenElement === photobookWindow) {
+            await document.exitFullscreen();
+        } else if (photobookWindow.requestFullscreen) {
+            await photobookWindow.requestFullscreen();
+        } else {
+            console.error('Fullscreen mode is not supported by this browser');
+        }
+    } catch (error) {
+        console.error('Unable to toggle photobook fullscreen mode:', error);
+    }
 }
 
 function closeWindow(windowId) {

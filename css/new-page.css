@@ -1174,6 +1174,224 @@ body.mobile-view #mobile-warning-window {
     min-width: 350px !important;
 }
 
+#photobook-window {
+    width: min(900px, 92vw);
+    height: min(720px, 84vh);
+    min-height: 0;
+    border: 1px solid #777;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+}
+
+#photobook-window .photobook-window-content {
+    display: block;
+    height: calc(100% - 41px);
+    padding: 14px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.photobook-gallery-selector[hidden],
+.photobook-gallery-view[hidden] {
+    display: none !important;
+}
+
+.photobook-gallery-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 16px;
+    height: 100%;
+    overflow-y: auto;
+    align-content: start;
+}
+
+.photobook-gallery-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid #aaa;
+    background: #f3f3f3;
+    color: #222;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+}
+
+.photobook-gallery-card:hover,
+.photobook-gallery-card:focus-visible {
+    border-color: #0078d7;
+    background: #e5f3ff;
+    outline: 2px solid #0078d7;
+}
+
+.photobook-gallery-card img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    background: #111;
+}
+
+.photobook-gallery-card-title {
+    font-weight: bold;
+}
+
+.photobook-gallery-card-count,
+.photobook-image-count {
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.photobook-gallery-view {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) 96px;
+    gap: 12px;
+    height: 100%;
+}
+
+.photobook-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 34px;
+}
+
+.photobook-gallery-title {
+    flex: 1;
+    overflow: hidden;
+    color: #222;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.photobook-back-button,
+.photobook-fullscreen-button,
+.photobook-arrow {
+    border: 1px solid #888;
+    background: #eee;
+    color: #222;
+    cursor: pointer;
+}
+
+.photobook-back-button,
+.photobook-fullscreen-button {
+    min-height: 32px;
+    padding: 5px 10px;
+}
+
+.photobook-stage-shell {
+    position: relative;
+    display: flex;
+    min-height: 0;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #111;
+}
+
+.photobook-main-image {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.photobook-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    width: 42px;
+    height: 54px;
+    transform: translateY(-50%);
+    border-color: rgba(255, 255, 255, 0.55);
+    background: rgba(0, 0, 0, 0.55);
+    color: white;
+    font-size: 18px;
+}
+
+.photobook-arrow:hover,
+.photobook-back-button:hover,
+.photobook-fullscreen-button:hover {
+    background: #0078d7;
+    color: white;
+}
+
+.photobook-arrow-left {
+    left: 10px;
+}
+
+.photobook-arrow-right {
+    right: 10px;
+}
+
+.photobook-thumb-strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 2px 8px;
+}
+
+.photobook-thumbnail {
+    flex: 0 0 82px;
+    height: 76px;
+    padding: 3px;
+    border: 2px solid transparent;
+    background: #222;
+    cursor: pointer;
+}
+
+.photobook-thumbnail.selected,
+.photobook-thumbnail:focus-visible {
+    border-color: #0078d7;
+    outline: none;
+}
+
+.photobook-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#photobook-window:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    border: 0;
+    background: #f3f3f3;
+}
+
+@media (max-width: 767px) {
+    #photobook-window {
+        width: 94vw !important;
+        height: 76vh !important;
+        min-height: 0 !important;
+        max-height: 76vh !important;
+    }
+
+    #photobook-window .photobook-window-content {
+        height: calc(100% - 41px) !important;
+        padding: 10px !important;
+    }
+
+    .photobook-gallery-view {
+        grid-template-rows: auto minmax(0, 1fr) 78px;
+        gap: 8px;
+    }
+
+    .photobook-header {
+        gap: 6px;
+    }
+
+    .photobook-back-button,
+    .photobook-fullscreen-button {
+        padding: 4px 7px;
+    }
+
+    .photobook-thumbnail {
+        flex-basis: 68px;
+        height: 62px;
+    }
+}
+
 /* Settings Window Styles */
 .setting-item {
     display: flex;

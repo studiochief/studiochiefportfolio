@@ -14,6 +14,7 @@
     <audio id="close-sound" src="media/close.wav" preload="auto"></audio>
     <audio id="closing-chime" src="media/closing-chime.wav" preload="auto"></audio>
     <!-- JAVA -->
+    <script defer src="js/gallery-data.js"></script>
     <script defer src="js/new-page.js"></script>
     <!--FAVICON -->
     <link rel="icon" href="Contact-icon.png">
@@ -54,6 +55,11 @@
 
     <!-- DESKTOP APPLICATIES LINKSBOVEN -->
     <div class="sidebar desktop-content">
+        <!-- PHOTOBOOK -->
+        <div class="icon" onclick="openPhotobook()">
+            <img src="img/divers-image.png" alt="Photobook">
+            <span>Photobook</span>
+        </div>
         <!-- PORTFOLIO -->
         <div class="icon" onclick="openWindow('portfolio')">
             <img src="img/Bestand.png" alt="Portfolio">
@@ -105,11 +111,40 @@
         <div class="start-menu-item" onclick="openWindowAndCloseMenu('contact')">Contact</div>
         <div class="start-menu-item" onclick="openWindowAndCloseMenu('over-mij')">About Me</div>
         <div class="start-menu-item" onclick="openWindowAndCloseMenu('software')">Software</div>
+        <div class="start-menu-item" onclick="openWindowAndCloseMenu('photobook')">Photobook</div>
         <div class="start-menu-item" onclick="openWindowAndCloseMenu('settings')">Settings</div>
         <div class="start-menu-item" onclick="goBackToIndex()">Reboot</div>
     </div>
 
     <!-- VENSTERS -->
+
+    <!-- PHOTOBOOK VENSTER -->
+    <div id="photobook-window" class="window photobook-window">
+        <div class="window-header">
+            <span>Photobook</span>
+            <div class="window-buttons">
+                <button onclick="minimizeWindow('photobook')">_</button>
+                <button onclick="closeWindow('photobook')">X</button>
+            </div>
+        </div>
+        <div class="window-content photobook-window-content">
+            <div id="photobook-gallery-selector" class="photobook-gallery-selector"></div>
+            <div id="photobook-gallery-view" class="photobook-gallery-view" aria-hidden="true" hidden>
+                <div class="photobook-header">
+                    <button type="button" class="photobook-back-button" onclick="showPhotobookGallerySelector()">← Back</button>
+                    <div id="photobook-gallery-title" class="photobook-gallery-title">Gallery</div>
+                    <span id="photobook-image-count" class="photobook-image-count" aria-live="polite"></span>
+                    <button type="button" class="photobook-fullscreen-button" id="photobook-fullscreen-button" aria-label="Toggle fullscreen" onclick="togglePhotobookFullscreen()">⤢</button>
+                </div>
+                <div class="photobook-stage-shell">
+                    <button type="button" class="photobook-arrow photobook-arrow-left" aria-label="Previous photo" onclick="changePhotobookImage(-1)">◀</button>
+                    <img id="photobook-main-image" class="photobook-main-image" src="" alt="Selected gallery image">
+                    <button type="button" class="photobook-arrow photobook-arrow-right" aria-label="Next photo" onclick="changePhotobookImage(1)">▶</button>
+                </div>
+                <div id="photobook-thumb-strip" class="photobook-thumb-strip"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- PORTFOLIO VENSTER -->
     <div id="portfolio-window" class="window" style="width: 600px;">
@@ -726,6 +761,9 @@
             </div>
         </div>
         <div class="window-content" style="padding: 20px;">
+            <div class="setting-item" style="margin-bottom: 12px;">
+                <span>Portfolio OS v1.0.2 19-10-2026</span>
+            </div>
             <div class="setting-item">
                 <span>CRT Scanline Effect</span>
                 <label class="switch">
